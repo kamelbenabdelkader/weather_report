@@ -4,13 +4,6 @@ import requests
 from PIL import Image
 
 
-
-# Fonction qui charge le fichier css
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-
 # Fonction qui prend en entré le nom de la ville et va faire une requete a l'API
 # pour aller chercher la reponse en json
 def get_weather_data(city_name):
