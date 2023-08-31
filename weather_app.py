@@ -5,7 +5,8 @@ import module_app
 from PIL import Image
 import requests
 import folium
-
+from geopy.geocoders import Nominatim
+from streamlit_folium import folium_static
 
 #Import du CSS
 module_app.local_css("style.css")
@@ -37,6 +38,19 @@ with col1:
 with col2:
     st.write("## Carte")
     if city_name:
-        # Utilisation de Folium pour afficher la carte
-        m = folium.Map(location=[0, 0], zoom_start=2)
-        st.write(m)
+        # Obtenir les coordonnées de la ville à partir de son nom
+        geolocalisation = Nominatim(user_agent="city_locator")
+        localisation = geolocalisation.geocode(city_name)
+
+        if localisation:
+
+            st.write(f"localisation de **{city_name}**:")
+            #st.write(f"Latitude: {localisation.latitude}, Longitude: {localisation.longitude}")
+
+            carte = folium.Map(location=[localisation.latitude, localisation.longitude], zoom_start=10)
+            folium.Marker([localisation.latitude, localisation.longitude], popup=city_name).add_to(carte)
+
+            # Afficher la carte
+            folium_static(carte)
+        else:
+            st.write("Impossible de trouver la ville.")

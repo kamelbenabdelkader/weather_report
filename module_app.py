@@ -14,12 +14,14 @@ def local_css(file_name):
 # Fonction qui prend en entré le nom de la ville et va faire une requete a l'API
 # pour aller chercher la reponse en json
 def get_weather_data(city_name):
+    KEY_API= ''
     # Requête à une API de météo (remplacez l'URL par l'API réelle que vous souhaitez utiliser)
-    weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid=1ef00ea2dfd53a8eca20a193742e9e80"
+    weather_url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={KEY_API}"
     response = requests.get(weather_url)
     weather_data = response.json()
 
     if weather_data["cod"] == 200:
+
         # Affichage des données météo dans un carré avec bordure
         # Image météo
         icon_id = weather_data['weather'][0]['icon']
